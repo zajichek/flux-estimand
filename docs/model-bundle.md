@@ -123,3 +123,11 @@ fluxestimand::compare_bundles(estimand, bundles)
 
 fluxestimand::validate_outputs(estimand, bundle_results)
 ```
+
+# Policy Sets (Future Consideration)
+
+Rather than defining counterfactuals as individual interventions, future versions of the Flux Estimand framework may instead define a policy space consisting of all decision policies relevant to the estimand.
+
+In this view, the estimand specifies the class of policies to be compared, while individual ModelBundle implementations determine how that policy space is represented. For example, one bundle may evaluate fixed policies at one-minute intervals, while another may evaluate continuously varying or adaptive policies. Both implement the same estimand but differ in how the policy space is explored.
+
+This perspective separates the scientific comparison (which policies are of interest) from the implementation strategy (which specific policies are evaluated), allowing increasingly sophisticated ModelBundles to be developed without modifying the estimand itself.
