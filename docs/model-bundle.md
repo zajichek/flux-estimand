@@ -83,3 +83,43 @@ Estimate
 
 Decision
 ```
+
+## Endpoint Functions
+
+An endpoint function is the estimand-level function that converts bundle simulation output into the target quantity of interest. It allows multiple ModelBundles to implement the same estimand while being evaluated against a common output contract.
+
+### Example
+
+```r
+endpoint <- function(sim_results) {
+  sim_results |>
+    summarize(
+      win_prob = mean(team_won),
+      overtime_prob = mean(reached_overtime),
+      empty_net_goal_prob = mean(empty_net_goal_allowed)
+    )
+}
+```
+
+A **ModelBundle** for this estimand must provide the following:
+
+```
+team_won
+reached_overtime
+empty_net_goal_allowed
+policy_id
+matchup_id
+simulation_id
+```
+
+Other possible tooling:
+
+```r
+fluxestimand::check_bundle(estimand, bundle)
+
+fluxestimand::run_endpoint(estimand, bundle)
+
+fluxestimand::compare_bundles(estimand, bundles)
+
+fluxestimand::validate_outputs(estimand, bundle_results)
+```

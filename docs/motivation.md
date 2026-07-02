@@ -18,6 +18,12 @@ rather than
 
 This subtle shift changes both the development process and the philosophy of simulation modeling.
 
+## Backstory
+
+While developing a hockey simulation in Flux, it became apparent that model complexity naturally grows without bound. Every omitted mechanism—players, line changes, fatigue, coaching decisions, puck possession—can be argued to improve realism. Without an explicit target, there is no principled stopping point.
+
+The Flux Estimand framework emerged from this observation. Rather than asking "How do we simulate hockey?", it asks "What question are we trying to answer about hockey?" The estimand provides the grounding needed to determine what must be modeled, what may be ignored, and when the model is sufficiently complete for its intended purpose.
+
 ## Separating Questions from Implementations
 
 One of the primary goals of the **Flux Estimand** framework is to separate the scientific question from its implementation.

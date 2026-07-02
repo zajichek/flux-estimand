@@ -24,6 +24,8 @@ Rather than beginning with the system being modeled, begin with the question bei
 
 The estimand defines the target quantity before implementation begins, allowing every modeling decision to be evaluated relative to that objective.
 
+An estimand defines not only what outcomes are measured, but also where the simulation begins.
+
 ---
 
 ## Core Idea
