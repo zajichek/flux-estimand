@@ -2,11 +2,13 @@
 
 Every `flux` project should begin by defining its estimand.
 
-The estimand serves as the _scientific contract_ for the project. It documents the decision being informed, the quantity to be estimated, the assumptions under which that quantity is meaningful, and the level of model complexity required to estimate it.
+The estimand serves as the _scientific contract_ for the project. It documents the decision being informed, the quantities to be estimated, the assumptions under which that quantities are meaningful, and the level of model complexity required to estimate them.
 
 If the implementation changes but the estimand remains unchanged, the purpose of the project remains constant.
 
 If the estimand changes substantially, the project is likely addressing a different scientific question and should be considered a different model.
+
+An estimand should represent a single coherent decision problem. It may require estimating multiple related quantities or contrasts, provided they collectively inform the same decision. If a quantity serves a fundamentally different decision context, it should generally be defined in a separate estimand project.
 
 # Item Template
 
