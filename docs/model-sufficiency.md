@@ -26,6 +26,14 @@ If not, additional complexity may be unnecessary.
 
 Given that state, what dynamic processes must be represented?
 
+# Project setup
+
+Every estimand project should begin with a single `init` bundle.
+
+The `init` bundle represents the minimum viable implementation capable of estimating the target estimand.
+
+Subsequent bundles should justify their existence by introducing alternative assumptions, increased fidelity, or different modeling approaches while continuing to estimate the same target quantity.
+
 # Conditioning States (Concept)
 
 A possible extension of the **Flux Estimand** framework is the concept of a conditioning state.
