@@ -21,7 +21,7 @@ You should add an `ESTIMAND.md` file at the root of your `flux` project director
 ## 5. Outcome
 ## 6. Contrast
 ## 7. Time Horizon
-## 8. Required State
+## 8. Required State Representation
 
 _What information must be represented for the estimand to be identifiable?_
 
