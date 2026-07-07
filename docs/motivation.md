@@ -50,7 +50,7 @@ Implementation B ───► Estimate
 Implementation C ───► Estimate
 ```
 
-## Scientific Evolution (future consideration)
+# Scientific Evolution (future consideration)
 
 Traditionally, computational models are often developed as isolated implementations that answer a particular research question at a point in time. As new ideas emerge, entirely new projects are frequently created, making it difficult to compare approaches or accumulate evidence in a structured manner.
 
@@ -76,3 +76,17 @@ Over time, common patterns may naturally evolve into software that assists with 
 * AI-assisted development of ModelBundles while preserving the estimand as the authoritative scientific specification.
 
 The goal of future tooling is not to replace scientific reasoning, but to encode the structure of the framework into reusable infrastructure. As the methodology matures, concepts that are currently expressed as documentation may naturally evolve into executable contracts, validation tools, and project templates.
+
+# Execution Layer (Future Consideration)
+
+A ModelBundle defines how a system evolves, but it does not define the specific entities on which it is executed. Instead, entities are instantiated at runtime to produce an estimate for a particular situation.
+
+This distinction naturally separates three concepts:
+
+* Estimand — Defines the scientific question, target quantities, and admissible state space.
+* ModelBundle — Defines one implementation of the estimand, including the processes, events, policies, and required state representation.
+* Execution — Instantiates concrete entities and executes them through a selected ModelBundle to estimate the target quantities.
+
+For example, an estimand may specify that inference is restricted to NHL playoff games with 10:00 remaining in regulation and the score not tied. One ModelBundle may begin simulation directly from that state, while another may simulate the entire game from puck drop and condition on reaching that state before evaluating goalie-pull policies. Both remain valid implementations of the same estimand because they estimate the same target quantities under the same scientific specification.
+
+Future tooling may formalize this execution layer by introducing standardized representations for execution scenarios, runtime inputs, and estimation runs. This would enable multiple ModelBundle implementations to be evaluated against comparable situations while preserving the separation between the scientific question, the model implementation, and the execution of the model.
