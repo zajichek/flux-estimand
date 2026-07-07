@@ -49,3 +49,30 @@ Implementation B ───► Estimate
 
 Implementation C ───► Estimate
 ```
+
+## Scientific Evolution (future consideration)
+
+Traditionally, computational models are often developed as isolated implementations that answer a particular research question at a point in time. As new ideas emerge, entirely new projects are frequently created, making it difficult to compare approaches or accumulate evidence in a structured manner.
+
+The Flux Estimand framework instead proposes organizing work around a persistent question. An estimand project defines the scientific objective, while successive ModelBundles provide alternative implementations, assumptions, and modeling strategies. Because every bundle targets the same estimand, meaningful comparisons between implementations become possible, allowing the body of evidence surrounding a question to evolve over time.
+
+### Community Development
+
+In the future, estimand projects may provide a standardized mechanism for proposing new ModelBundles. Rather than replacing existing implementations, contributors can submit alternative bundles implementing the same estimand under different assumptions or modeling approaches.
+
+This creates a structured process for scientific and methodological improvement while maintaining a stable specification of the underlying question.
+
+### Future Tooling
+
+The Flux Estimand framework is intended to be methodology-first, with tooling emerging only after repeated use across multiple estimand projects.
+
+Over time, common patterns may naturally evolve into software that assists with creating, validating, executing, and comparing estimand projects. Potential capabilities include:
+
+* Validation that a ModelBundle satisfies the requirements of its target estimand.
+* Standardized endpoint functions for extracting the target quantities of interest.
+* Automated comparison of multiple ModelBundles implementing the same estimand.
+* Discovery and registration of ModelBundles associated with an estimand.
+* Standardized reporting of assumptions, validation results, and model sufficiency.
+* AI-assisted development of ModelBundles while preserving the estimand as the authoritative scientific specification.
+
+The goal of future tooling is not to replace scientific reasoning, but to encode the structure of the framework into reusable infrastructure. As the methodology matures, concepts that are currently expressed as documentation may naturally evolve into executable contracts, validation tools, and project templates.
