@@ -2,95 +2,50 @@
 
 Simulation projects naturally encourage realism.
 
-Developers continually discover additional mechanisms, interactions, and sources of variation that could be incorporated into the model. Without an explicit target, model scope expands indefinitely.
+If a project begins with "simulate hockey," "simulate heart failure," or "simulate an emergency department," there is no obvious stopping point. More mechanisms, entities, interactions, and edge cases can always be added.
 
-This phenomenon is not unique to `flux`—it is a common challenge in simulation modeling.
+Flux Estimand narrows the starting point:
 
-The **Flux Estimand** framework attempts to constrain this process by requiring every modeling decision to be justified relative to a predefined target quantity.
+> What decision are we evaluating?
 
-The guiding question becomes:
+The goal is not to simulate an entire domain. The goal is to construct a decision-oriented Flux `ModelBundle` capable of estimating the causal consequences of alternative actions or policies under stated assumptions.
 
-* Does this improve estimation of the estimand?
+## Decisions Before Domains
 
-rather than
+A domain-first workflow asks:
 
-* Does this make the simulation more realistic?
+> What does the system contain?
 
-This subtle shift changes both the development process and the philosophy of simulation modeling.
+A Flux Estimand workflow asks:
 
-> An estimand should be formulated so that the counterfactual worlds diverge only at the intervention of interest. Whenever possible, the observed history leading to the decision should be conditioned upon rather than re-simulated. This focuses the estimate on the causal effect of the decision itself and reduces unnecessary variability introduced by unrelated stochastic events.
+> What counterfactual worlds must be compared to inform this decision?
 
-Condition on the information that would be available to the decision-maker at the moment the intervention is defined.
+That shift changes the role of the simulation. The simulation is no longer judged mainly by how much of the real system it includes. It is judged by whether its state, processes, and assumptions are sufficient to estimate the target quantities defined by the estimand.
 
-## Backstory
+## Conditioning State
 
-While developing a hockey simulation in Flux, it became apparent that model complexity naturally grows without bound. Every omitted mechanism—players, line changes, fatigue, coaching decisions, puck possession—can be argued to improve realism. Without an explicit target, there is no principled stopping point.
+The conditioning state is the point at which counterfactual worlds begin to differ.
 
-The Flux Estimand framework emerged from this observation. Rather than asking "How do we simulate hockey?", it asks "What question are we trying to answer about hockey?" The estimand provides the grounding needed to determine what must be modeled, what may be ignored, and when the model is sufficiently complete for its intended purpose.
+History before the conditioning state is treated as observed and shared across scenarios. The alternative worlds differ only in the decision, action, or policy being evaluated.
 
-## Separating Questions from Implementations
+For example, a goalie-pull estimand might condition on:
 
-One of the primary goals of the **Flux Estimand** framework is to separate the scientific question from its implementation.
-
-An estimand defines what the model is intended to estimate. It does not prescribe how that quantity must be estimated.
-
-Multiple `flux` **ModelBundles** may satisfy the same estimand while employing different assumptions, levels of abstraction, or computational techniques.
-
-Likewise, a single **ModelBundle** may evolve substantially over time while continuing to satisfy the same estimand.
-
-This separation allows model implementations to improve, be compared, or be replaced without changing the underlying scientific objective.
-
-```
-Scientific Question
-        │
-        ▼
-    ESTIMAND
-        │
-        ▼
-Implementation A ───► Estimate
-
-Implementation B ───► Estimate
-
-Implementation C ───► Estimate
+```text
+Third period
+6:00 remaining
+Trailing by one goal
+Specific teams
+Observed game context
 ```
 
-# Scientific Evolution (future consideration)
+From that shared state, the simulation compares alternative goalie-pull policies. This focuses the estimate on the consequences of the decision itself rather than on unrelated stochastic events that occurred earlier.
 
-Traditionally, computational models are often developed as isolated implementations that answer a particular research question at a point in time. As new ideas emerge, entirely new projects are frequently created, making it difficult to compare approaches or accumulate evidence in a structured manner.
+## Scope Control
 
-The Flux Estimand framework instead proposes organizing work around a persistent question. An estimand project defines the scientific objective, while successive ModelBundles provide alternative implementations, assumptions, and modeling strategies. Because every bundle targets the same estimand, meaningful comparisons between implementations become possible, allowing the body of evidence surrounding a question to evolve over time.
+Flux Estimand does help control scope, but scope control is not the main goal. The main goal is to make the causal comparison explicit.
 
-### Community Development
+Every proposed increase in complexity should be evaluated against one question:
 
-In the future, estimand projects may provide a standardized mechanism for proposing new ModelBundles. Rather than replacing existing implementations, contributors can submit alternative bundles implementing the same estimand under different assumptions or modeling approaches.
+> Does this improve estimation of the target quantities for this decision?
 
-This creates a structured process for scientific and methodological improvement while maintaining a stable specification of the underlying question.
-
-### Future Tooling
-
-The Flux Estimand framework is intended to be methodology-first, with tooling emerging only after repeated use across multiple estimand projects.
-
-Over time, common patterns may naturally evolve into software that assists with creating, validating, executing, and comparing estimand projects. Potential capabilities include:
-
-* Validation that a ModelBundle satisfies the requirements of its target estimand.
-* Standardized endpoint functions for extracting the target quantities of interest.
-* Automated comparison of multiple ModelBundles implementing the same estimand.
-* Discovery and registration of ModelBundles associated with an estimand.
-* Standardized reporting of assumptions, validation results, and model sufficiency.
-* AI-assisted development of ModelBundles while preserving the estimand as the authoritative scientific specification.
-
-The goal of future tooling is not to replace scientific reasoning, but to encode the structure of the framework into reusable infrastructure. As the methodology matures, concepts that are currently expressed as documentation may naturally evolve into executable contracts, validation tools, and project templates.
-
-# Execution Layer (Future Consideration)
-
-A ModelBundle defines how a system evolves, but it does not define the specific entities on which it is executed. Instead, entities are instantiated at runtime to produce an estimate for a particular situation.
-
-This distinction naturally separates three concepts:
-
-* Estimand — Defines the scientific question, target quantities, and admissible state space.
-* ModelBundle — Defines one implementation of the estimand, including the processes, events, policies, and required state representation.
-* Execution — Instantiates concrete entities and executes them through a selected ModelBundle to estimate the target quantities.
-
-For example, an estimand may specify that inference is restricted to NHL playoff games with 10:00 remaining in regulation and the score not tied. One ModelBundle may begin simulation directly from that state, while another may simulate the entire game from puck drop and condition on reaching that state before evaluating goalie-pull policies. Both remain valid implementations of the same estimand because they estimate the same target quantities under the same scientific specification.
-
-Future tooling may formalize this execution layer by introducing standardized representations for execution scenarios, runtime inputs, and estimation runs. This would enable multiple ModelBundle implementations to be evaluated against comparable situations while preserving the separation between the scientific question, the model implementation, and the execution of the model.
+If not, the added realism may be unnecessary for the estimand, even if it would make the simulation feel more complete.

@@ -1,9 +1,9 @@
 ---
 id: goalie_pull_policy
-title: Optimal Goalie Pull Timing for a Specified NHL Playoff Matchup
+title: Goalie Pull Timing for a Specified NHL Playoff Matchup
 question: >
-  When should a team pull its goalie to maximize the probability of winning
-  a specified NHL playoff matchup?
+  Which goalie-pull policy maximizes the probability of winning or reaching
+  overtime in a specified NHL playoff matchup?
 domain: Hockey
 version: 0.1.0
 status: Draft
@@ -11,165 +11,179 @@ status: Draft
 
 # Flux Estimand
 
+This estimand defines a decision-oriented causal comparison: the consequences of alternative goalie-pull policies under stated assumptions.
+
+The Flux `ModelBundle` implementations beneath this project are executable realizations of this estimand. They are not models of all hockey; they are models built to estimate the target quantities defined here.
+
 ## 1. Decision Context
 
-NHL coaches must decide when to remove their goaltender for an extra attacker when trailing late in a playoff game. Pulling the goalie earlier increases offensive pressure but also increases the risk of conceding an empty-net goal. The decision is inherently matchup dependent, depending on team strengths, scoring rates, defensive ability, and game state.
+NHL coaches must decide when to remove their goaltender for an extra attacker when trailing late in a playoff game.
 
-This model aims to inform that coaching decision for a specific playoff matchup.
+Pulling the goalie earlier may increase offensive pressure, but it can also increase the risk of conceding an empty-net goal. The decision is matchup dependent and may depend on score, time remaining, team strengths, game context, and the assumptions encoded in the simulation.
+
+This estimand is intended to inform that coaching decision for a specified playoff matchup.
 
 ## 2. Research Question
 
-For a specified NHL playoff matchup, what goalie-pull strategy maximizes the probability of advancing to overtime or winning the game?
+For a specified NHL playoff matchup and conditioning state, which goalie-pull policy produces the most favorable target quantities?
 
-The objective is not to determine a universal pull time, but rather to identify the optimal policy for the particular teams being modeled.
+The objective is not to determine a universal pull time. The objective is to compare counterfactual goalie-pull policies for the teams and game context being modeled.
 
-## 3. Target Population / Initial Conditions
+## 3. Target Population / Conditioning State
 
-The target population consists of games between the specified home and away teams under playoff conditions.
+The target population consists of playoff game states involving the specified teams under the conditions declared for the analysis.
 
-Each simulation begins at puck drop and evolves according to the defined game processes.
+### Conditioning State
 
-Alternative initial states may later be considered (e.g., beginning with six minutes remaining while trailing by one goal), but the primary estimand is based on full-game simulation.
+The conditioning state is the point at which counterfactual worlds begin to diverge. History before this state is treated as observed and shared across policy scenarios.
 
-## 4. Counterfactual Scenarios / Policies
+Example conditioning state:
 
-The same matchup is simulated repeatedly under alternative goalie-pull policies.
+```text
+Third period
+6:00 remaining
+Trailing by one goal
+Specified home and away teams
+Goalie currently in net
+Current manpower situation observed
+```
+
+All `ModelBundle` implementations for this estimand should preserve this conditioning state. A different conditioning state would generally define a different estimand.
+
+## 4. Counterfactual Actions or Policies
+
+The same conditioning state is simulated under alternative goalie-pull policies.
 
 Examples include:
 
-Pull goalie at exactly 4:00 remaining.
-Pull goalie at exactly 3:00 remaining.
-Pull goalie at exactly 2:00 remaining.
-Pull goalie when win probability falls below a specified threshold.
-Pull goalie according to a dynamic policy based on score, possession, and remaining time.
+- pull goalie at exactly 4:00 remaining
+- pull goalie at exactly 3:00 remaining
+- pull goalie at exactly 2:00 remaining
+- pull goalie when win probability falls below a specified threshold
+- pull goalie according to a dynamic policy based on score, possession, and remaining time
 
-All other aspects of the simulation remain unchanged.
+All other aspects of the conditioning state should remain shared across counterfactual policy comparisons except for downstream consequences of the policy.
 
-## 5. Outcome
+## 5. Outcomes / Target Quantities
 
-Primary outcome:
+Primary target quantity:
 
-Probability of winning the game.
+- probability of winning the game
 
-Secondary outcomes:
+Secondary target quantities:
 
-Probability of reaching overtime.
-Probability of scoring while the goalie is pulled.
-Probability of allowing an empty-net goal.
-Expected goal differential.
-Distribution of final game outcomes.
+- probability of reaching overtime
+- probability of scoring while the goalie is pulled
+- probability of allowing an empty-net goal
+- expected goal differential
+- distribution of final game outcomes
 
-## 6. Contrast
+## 6. Contrasts
 
-Compare the estimated outcome distributions across goalie-pull policies.
+Compare estimated target quantities across goalie-pull policies.
 
 Primary contrast:
 
-Difference in win probability between competing policies.
+- difference in win probability between competing policies
 
-Secondary contrasts may include expected overtime probability and expected goal differential.
+Secondary contrasts may include differences in overtime probability, empty-net goal risk, and expected goal differential.
 
 ## 7. Time Horizon
 
-The simulation begins at puck drop and ends when the game reaches its terminal state.
+The time horizon begins at the conditioning state and ends when the game reaches a declared terminal state for the estimand.
 
-Initially this includes regulation only.
+For this template, the terminal state should be chosen before comparing policies, such as the conclusion of regulation or the conclusion of overtime. Changing the terminal state may change the target quantities and should be treated as an estimand-level change.
 
-Future versions may extend through overtime and shootouts.
+## 8. Required State Representation
 
-## 8. Required State
+The estimand specifies what information must be recoverable, not how that information is represented internally.
 
-The model must represent sufficient game state to evaluate goalie-pull decisions.
+Minimum required information includes:
 
-Minimum required state includes:
-
-Game clock
-Period
-Score
-Goalie status
-Team identities
-Home/away designation
-Team strength parameters
+- game clock
+- period
+- score
+- goalie status
+- team identities
+- home/away designation
+- team strength parameters
 
 Potential future additions include:
 
-Possession
-Offensive zone possession
-Manpower situation
-Timeout availability
+- possession
+- offensive zone possession
+- manpower situation
+- timeout availability
+- fatigue or player availability
+
+Additional state should be included when it materially improves estimation of the target quantities.
 
 ## 9. Required Processes
 
 Required processes include:
 
-Goal scoring
-Period transitions
-Goalie pull decision
-Empty-net scoring dynamics
-Game termination
+- goal scoring
+- goalie-pull policy execution
+- scoring dynamics with and without an empty net
+- period or terminal-state transitions
+- game termination
 
-Processes should only be included if they materially influence estimation of the target estimand.
+Processes should be included when they materially influence the counterfactual policy comparison.
 
 ## 10. Model Sufficiency
 
-The model is considered sufficient when it can estimate matchup-specific differences between goalie-pull policies while reproducing the aspects of NHL playoff hockey that materially influence those estimates.
+A `ModelBundle` implementation is sufficient when it contains enough state and process structure to estimate the consequences of goalie-pull policies with appropriate credibility under stated assumptions.
 
-Additional realism should only be introduced when it meaningfully changes the estimated policy comparison.
-
-Processes that do not materially affect the estimand are intentionally excluded.
+Additional realism should be justified by whether it improves estimation of the target quantities or changes the policy contrast in a meaningful way.
 
 ## 11. Validation Targets
 
-Before comparing policies, the model should reasonably reproduce observed playoff hockey characteristics, including:
+Before comparing policies, a `ModelBundle` implementation should reasonably reproduce or satisfy quantities relevant to the estimand, such as:
 
-Goal scoring rates
-Goal timing distributions
-Empty-net goal frequency
-Team-specific offensive and defensive performance
-Home ice advantage
-Historical win probabilities
+- goal scoring rates
+- goal timing distributions
+- empty-net goal frequency
+- team-specific offensive and defensive performance
+- home ice advantage
+- late-game win probability patterns
 
-Validation focuses on quantities relevant to the estimand rather than overall realism.
+Validation should focus on quantities that affect the decision comparison.
 
 ## 12. Actionability / Decision Rules
 
-The model is intended to recommend goalie-pull policies for the specified matchup.
+The estimand is intended to support goalie-pull policy recommendations for the specified matchup and conditioning state.
 
-If one policy consistently produces a higher probability of winning across repeated simulations, it becomes the preferred recommendation.
+If one policy consistently produces a higher estimated win probability across simulation uncertainty and sensitivity analyses, it becomes the preferred recommendation.
 
-If multiple policies produce similar results within simulation uncertainty, no practical preference is established.
-
-The model should support both policy comparison and sensitivity analyses to understand how recommendations change under alternative assumptions.
+If multiple policies produce similar estimates, no practical preference is established.
 
 ## 13. Out of Scope
 
-This model is not intended to answer questions regarding:
+This estimand is not intended to answer questions about:
 
-Individual player value
-Line combinations
-Trade decisions
-Draft strategy
-Season-long roster construction
-Injury risk
-Referee performance
+- individual player value
+- line combinations
+- trade decisions
+- draft strategy
+- season-long roster construction
+- injury risk
+- referee performance
 
-The model addresses only goalie-pull strategy for a specified matchup.
+The estimand addresses goalie-pull policy for a specified matchup and conditioning state.
 
 ## 14. Assumptions
 
-The simulation assumes that the modeled processes adequately capture the aspects of gameplay relevant to goalie-pull decisions.
+The simulation assumes that the represented state and processes adequately capture the aspects of gameplay relevant to the goalie-pull decision.
 
 Parameter estimates are assumed to represent the specified teams under playoff conditions.
 
-Unmodeled processes are assumed either to have negligible influence on the estimand or to contribute similarly across the policies being compared.
+Unmodeled processes are assumed either to have negligible influence on the target quantities or to contribute similarly across policies being compared.
 
 ## 15. Open Questions
 
-Potential areas for future refinement include:
-
-Should goalie-pull decisions depend on puck possession?
-Should team-specific coaching tendencies be represented?
-Should player fatigue influence late-game scoring rates?
-How should overtime strategy be incorporated?
-How should uncertainty in model parameters propagate into policy recommendations?
-Can adaptive policies outperform fixed pull times?
+- Should goalie-pull decisions depend on puck possession?
+- Should team-specific coaching tendencies be represented?
+- Should player fatigue influence late-game scoring rates?
+- How should overtime strategy be incorporated?
+- How should uncertainty in model parameters propagate into policy recommendations?
+- Can adaptive policies outperform fixed pull times?

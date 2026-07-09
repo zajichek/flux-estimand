@@ -1,16 +1,16 @@
-# Flux Estimand
+# Flux Estimand Framework
 
 ## tl;dr
 
-Flux Estimand is a methodology for constructing Flux ModelBundles whose purpose is to estimate the causal consequences of alternative decisions.
+A `ModelBundle` is one implementation of an estimand: a model built to estimate the causal consequences of a particular decision, not the implementation of an entire domain.
 
-An estimand defines the decision, the conditioning state, the counterfactual actions, and the target quantities of interest. A ModelBundle is one implementation of that estimand.
+Flux Estimand provides a structured methodology for building decision-oriented Flux simulations under stated assumptions.
 
 ---
 
 ## Motivation
 
-Simulation projects often begin with a broad objective:
+Simulation projects often begin with a broad goal:
 
 > "Simulate hockey."
 
@@ -18,73 +18,34 @@ or
 
 > "Simulate heart failure."
 
-Without a clearly defined scientific target, model scope naturally expands as additional mechanisms, entities, and interactions are added to increase realism.
+That framing can make model scope unbounded. Every omitted mechanism, entity, and interaction can be argued to make the simulation more realistic.
 
-The **Flux Estimand** framework proposes a different workflow.
+Flux Estimand starts from a different question:
 
-Rather than beginning with the system being modeled, begin with the question being answered.
+> What decision are we evaluating, and what counterfactual worlds need to be compared?
 
-The estimand defines the target quantity before implementation begins, allowing every modeling decision to be evaluated relative to that objective.
+The framework is intended for decision-oriented Flux projects where the goal is to estimate the causal consequences of alternative decisions, actions, or policies. It is not a requirement for every possible Flux simulation.
 
-An estimand defines not only what outcomes are measured, but also where the simulation begins.
+Flux remains the simulation engine. Flux Estimand is a layer above Flux that structures the scientific and decision question before a `ModelBundle` implementation is built.
 
 ---
 
 ## Core Idea
 
-The unit of modeling is **the question**, not the domain.
-
-An estimand defines:
-
-- the decision being informed
-- the research question
-- the counterfactual scenarios
-- the target outcome
-- the required model scope
-- the validation targets
-- the conditions under which the model is considered sufficient
-
-A Flux `ModelBundle` is then one possible implementation of that estimand.
-
-Multiple ModelBundles may implement the same estimand while differing in assumptions, complexity, or computational approach.
-
-This repository proposes an estimand-first methodology for designing Flux models. Although the ideas may be applicable to other simulation frameworks, they are presented here in the context of Flux.
-
----
-
-## Repository Structure
-
-A project repository represents an **estimand project**, not a `flux` project.
-
-```text
-estimand-project/
-│
-├── README.md            # Project overview
-├── ESTIMAND.md          # Estimand specification
-├── docs/                # Supporting documentation
-└── bundles/             # Flux ModelBundle implementations
-```
-
-The root `ESTIMAND.md` defines the estimand for the project, including the target question, intended outcome, assumptions, validation targets, and model sufficiency criteria.
-
-Each subdirectory within `bundles/` contains a Flux `ModelBundle` implementing that estimand. Multiple bundles may exist for the same estimand, differing in assumptions, complexity, or modeling approach.
-
----
-
-## Workflow
-
-The recommended workflow is:
+Build the simulation around the decision whose consequences are being estimated.
 
 ```text
 Decision
     ↓
-Research Question
+Conditioning State
     ↓
-Estimand
+Counterfactual Actions / Policies
+    ↓
+Outcomes / Target Quantities
     ↓
 Model Sufficiency
     ↓
-Flux ModelBundle
+ModelBundle
     ↓
 Simulation
     ↓
@@ -93,26 +54,73 @@ Estimate
 Decision
 ```
 
+An estimand defines the decision problem, the counterfactual actions or policies to compare, the target quantities to estimate, and the assumptions under which those quantities are meaningful.
+
+The conditioning state defines the point at which counterfactual worlds diverge. History before that state is treated as observed and shared; the alternative worlds differ only in the decision, action, or policy being evaluated.
+
+A Flux `ModelBundle` is one executable implementation of the estimand. Multiple `ModelBundle` implementations may target the same estimand while differing in assumptions, fidelity, parameterization, or computational strategy.
+
+---
+
+## What an Estimand Defines
+
+A decision-oriented Flux estimand should specify:
+
+- decision context
+- research question
+- target population / conditioning state
+- counterfactual actions or policies
+- outcomes / target quantities
+- contrasts
+- time horizon
+- required state representation
+- required processes
+- model sufficiency
+- validation targets
+- actionability / decision rules
+- out of scope
+- assumptions
+- open questions
+
+---
+
+## Repository Structure
+
+An estimand project is organized around a decision-oriented estimand, with one or more Flux `ModelBundle` implementations beneath it.
+
+```text
+estimand-project/
+├── README.md
+├── ESTIMAND.md
+├── docs/
+└── bundles/
+    ├── init/
+    └── alternative_bundle/
+```
+
+The root `ESTIMAND.md` defines the decision-oriented estimand: the decision context, conditioning state, counterfactual actions or policies, target quantities, assumptions, validation targets, and sufficiency criteria.
+
+The `bundles/` directory contains one or more Flux `ModelBundle` implementations of that estimand. The recommended first bundle is `bundles/init/`, the minimal working implementation capable of estimating the target quantities with explicit assumptions.
+
 ---
 
 ## Repository Contents
 
 | Document | Purpose |
 |----------|---------|
-| `ESTIMAND.md` | Defines the estimand specification for a project |
-| `docs/motivation.md` | Why an estimand-first workflow is useful |
-| `docs/potential-outcomes.md` | Relationship to causal estimands and counterfactual reasoning |
-| `docs/modelbundle.md` | Interpreting ModelBundles as estimand implementations |
-| `docs/model-sufficiency.md` | Defining "good enough" models |
-| `docs/workflow.md` | Recommended development workflow |
+| `ESTIMAND.md` | Template for a decision-oriented estimand specification |
+| `docs/motivation.md` | Why Flux Estimand starts from decisions rather than domains |
+| `docs/potential-outcomes.md` | How counterfactual reasoning motivates the framework |
+| `docs/model-bundle.md` | Interpreting ModelBundles as estimand implementations |
+| `docs/model-sufficiency.md` | Defining sufficiency relative to the target decision estimand |
+| `docs/workflow.md` | Practical workflow for decision-oriented Flux Estimand projects |
+| `docs/future-directions.md` | Exploratory ideas for tooling, endpoints, policy spaces, and execution |
 | `templates/` | Starting points for new estimand projects |
 
 ---
 
 ## Status
 
-This repository explores an independent methodology for designing Flux models around explicit scientific questions.
+Flux Estimand is experimental methodology for decision-oriented Flux modeling. Tooling may emerge later, but the current focus is a clear specification layer for building simulations around causal comparisons under stated assumptions.
 
-The ideas presented here are experimental and intended to encourage discussion around structured simulation model development.
-
-**Build the simplest model capable of answering the question—not the most realistic model imaginable.**
+**Build the simplest ModelBundle implementation capable of estimating the consequences of the decision.**

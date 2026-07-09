@@ -1,73 +1,59 @@
-# Estimand Project Structure
+# Workflow
 
-The recommended unit of organization is an **estimand project**.
+Flux Estimand is intended for decision-oriented Flux projects where the purpose of simulation is to compare counterfactual actions or policies under stated assumptions.
 
-An estimand project is a repository centered on a single scientific or decision-oriented target question. The root-level `ESTIMAND.md` defines the estimand: the decision context, target quantity, counterfactual scenarios, outcome, contrast, assumptions, validation targets, and model sufficiency criteria.
+## Practical Steps
 
-Flux implementations live underneath this estimand.
+1. Identify the decision.
 
-A single estimand may have one or more Flux `ModelBundle` implementations. Each bundle represents one executable realization of the estimand, potentially differing in assumptions, complexity, parameterization, or computational strategy.
+   State the concrete decision, action, or policy choice the project is meant to inform.
+
+2. Define the conditioning state.
+
+   Specify the point at which counterfactual worlds diverge. Treat history before this point as observed and shared across scenarios.
+
+3. Specify counterfactual actions or policies.
+
+   Define the alternatives to compare. These may be fixed actions, dynamic policies, or a structured policy set.
+
+4. Define outcomes and target quantities.
+
+   State what will be estimated from the simulations, such as event probabilities, expected outcomes, risks, or distributions.
+
+5. Define contrasts.
+
+   Specify how target quantities will be compared across counterfactual actions or policies.
+
+6. Determine required state and processes.
+
+   Identify the information and dynamics that must be represented for the comparison to be credible. The estimand specifies what must be recoverable, not the implementation details of how Flux stores it.
+
+7. Build the minimal `init` ModelBundle.
+
+   Start with `bundles/init/`, the simplest Flux `ModelBundle` implementation capable of estimating the target quantities under explicit assumptions.
+
+8. Validate.
+
+   Validate the ModelBundle implementation against quantities relevant to the estimand. Validation should focus on what affects the decision comparison, not on general realism.
+
+9. Estimate.
+
+   Run the counterfactual simulations and estimate the target quantities and contrasts.
+
+10. Inform decision rules.
+
+    Use the estimates, uncertainty, assumptions, and validation results to support a recommendation or identify when no practical preference is established.
+
+## Recommended Project Structure
 
 ```text
-goalie-pull-estimand/
+estimand-project/
 ├── README.md
 ├── ESTIMAND.md
 ├── docs/
-├── templates/
 └── bundles/
-    ├── hockey_goalie_pull_simple/
-    ├── hockey_goalie_pull_possession/
-    └── hockey_goalie_pull_player_level/
-
+    ├── init/
+    └── alternative_bundle/
 ```
 
-The estimand does not depend on any particular bundle. Instead, each bundle should declare which estimand it implements.
-
-```
-id: hockey_goalie_pull_simple
-estimand_id: goalie_pull_policy
-status: draft
-```
-
-This preserves the separation between the scientific target and the executable model realization.
-
-## Conceptual workflow
-
-Identify the decision.
-
-↓
-
-Define the estimand.
-
-↓
-
-Determine required counterfactuals.
-
-↓
-
-Determine minimum state representation.
-
-↓
-
-Determine required processes.
-
-↓
-
-Implement the ModelBundle.
-
-↓
-
-Validate against reality.
-
-↓
-
-Estimate the target quantity.
-
-↓
-
-Interpret results.
-
-↓
-
-Inform decisions.
-```
+The root `ESTIMAND.md` is the scientific and decision specification. Each directory under `bundles/` is a Flux `ModelBundle` implementation of that estimand.

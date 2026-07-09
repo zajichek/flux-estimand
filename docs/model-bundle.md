@@ -1,133 +1,67 @@
-# Rethinking the ModelBundle
+# ModelBundle Implementations
 
-A traditional interpretation of a `flux` **ModelBundle** is that it represents a realization of a particular domain.
+A Flux `ModelBundle` is one implementation of an estimand.
 
-Examples might include:
+It is not the estimand itself, and it is not a model of an entire domain. It is an executable realization designed to estimate the target quantities defined by a decision-oriented estimand.
 
-* Hockey
-* Heart Failure
-* Diabetes
-* Emergency Department Operations
+## From Domain Models to Decision Implementations
 
-The **Flux Estimand** framework proposes a different interpretation.
+A domain-first interpretation might define one broad model:
 
-A **ModelBundle** is not intended to represent an entire domain.
-
-Instead, a **ModelBundle** represents the implementation required to answer a specific _estimand_.
-
-This distinction has important consequences.
-
-Multiple **ModelBundles** may exist for the same domain.
-
-For example:
-
-```
+```text
 Hockey
-
-├── ThreeGoalLeadBundle
-├── GoaliePullBundle
-├── PenaltyKillBundle
-├── OvertimeBundle
-└── DraftLotteryBundle
 ```
 
-We're not just trying to create a model to simulate a hockey game with infinite complexity.
+Flux Estimand instead organizes work around decisions:
 
-Each bundle may reuse common components while differing in scope, assumptions, required processes, and validation criteria.
-
-The estimand—not the domain—defines the bundle.
-
-## Key Points:
-
-* A **ModelBundle** is one possible implementation of an estimand.
-
-* Different **ModelBundles** may implement the same estimand while differing in fidelity, assumptions, algorithms, or computational efficiency.
-
-* Therefore, **ModelBundles** should not be interpreted as the estimands themselves, but as executable realizations designed to estimate them.
-
-```
-Decision
-
-↓
-
-Question
-
-↓
-
-Estimand
-      │
-      ├── defines scope
-      ├── defines validation
-      ├── defines sufficiency
-      └── defines actionability
-
-↓
-
-ModelBundle
-      │
-      ├── entities
-      ├── events
-      ├── decisions
-      ├── transitions
-      └── observations
-
-↓
-
-Simulation
-
-↓
-
-Estimate
-
-↓
-
-Decision
+```text
+Hockey
+├── GoaliePullPolicyBundle
+├── PenaltyKillDecisionBundle
+├── OvertimeStrategyBundle
+└── DraftLotteryPolicyBundle
 ```
 
-## Endpoint Functions
+Each bundle may use hockey concepts, but each is scoped by a different estimand. The relevant question is not "Does this simulate hockey?" but "Does this implementation credibly estimate the consequences of the decision defined by the estimand?"
 
-An endpoint function is the estimand-level function that converts bundle simulation output into the target quantity of interest. It allows multiple ModelBundles to implement the same estimand while being evaluated against a common output contract.
+## Multiple Implementations
 
-### Example
+Multiple `ModelBundle` implementations may target the same estimand while differing in:
 
-```r
-endpoint <- function(sim_results) {
-  sim_results |>
-    summarize(
-      win_prob = mean(team_won),
-      overtime_prob = mean(reached_overtime),
-      empty_net_goal_prob = mean(empty_net_goal_allowed)
-    )
-}
+- assumptions
+- state representation
+- process detail
+- parameterization
+- fidelity
+- computational strategy
+
+This separation lets the estimand remain stable while implementations evolve, improve, or compete.
+
+```text
+Decision-Oriented Estimand
+        │
+        ├── init ModelBundle
+        ├── higher_fidelity ModelBundle
+        └── alternative_assumptions ModelBundle
 ```
 
-A **ModelBundle** for this estimand must provide the following:
+All implementations should estimate the same target quantities and contrasts, even if they represent the system differently.
 
-```
-team_won
-reached_overtime
-empty_net_goal_allowed
+## Output Contracts
+
+A ModelBundle implementation should produce enough output to evaluate the estimand's target quantities and contrasts.
+
+For example, a goalie-pull estimand might require simulation output such as:
+
+```text
 policy_id
 matchup_id
 simulation_id
+team_won
+reached_overtime
+empty_net_goal_allowed
 ```
 
-Other possible tooling:
+Those fields are not the estimand. They are part of an implementation contract that allows the estimand-level target quantities to be calculated consistently across bundles.
 
-```r
-fluxestimand::check_bundle(estimand, bundle)
-
-fluxestimand::run_endpoint(estimand, bundle)
-
-fluxestimand::compare_bundles(estimand, bundles)
-
-fluxestimand::validate_outputs(estimand, bundle_results)
-```
-
-# Policy Sets (Future Consideration)
-
-Rather than defining counterfactuals as individual interventions, future versions of the Flux Estimand framework may instead define a policy space consisting of all decision policies relevant to the estimand.
-
-In this view, the estimand specifies the class of policies to be compared, while individual ModelBundle implementations determine how that policy space is represented. For example, one bundle may evaluate fixed policies at one-minute intervals, while another may evaluate continuously varying or adaptive policies. Both implement the same estimand but differ in how the policy space is explored.
-
-This perspective separates the scientific comparison (which policies are of interest) from the implementation strategy (which specific policies are evaluated), allowing increasingly sophisticated ModelBundles to be developed without modifying the estimand itself.
+Endpoint functions and formal output contracts are future tooling ideas; see `docs/future-directions.md`.
