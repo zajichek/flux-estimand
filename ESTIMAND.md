@@ -22,6 +22,7 @@ You should add an `ESTIMAND.md` file at the root of your `flux` project director
 ## 2. Research Question
 ## 3. Target Population
 ### Conditioning State
+>The conditioning state defines the point at which the counterfactual worlds begin to differ. All history prior to the conditioning state is treated as observed and shared between the counterfactual scenarios.
 ## 4. Counterfactual Scenarios / Policies
 ## 5. Outcome
 ## 6. Contrast
