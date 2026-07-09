@@ -2,9 +2,9 @@
 
 ## tl;dr
 
-A **ModelBundle** is the implementation of an **estimand**—a model built to answer a particular question—not the implementation of an entire domain.
+Flux Estimand is a methodology for constructing Flux ModelBundles whose purpose is to estimate the causal consequences of alternative decisions.
 
-Flux Estimand provides a structured methodology for building simulation models whose explicit purpose is to estimate the causal consequences of alternative decisions under stated assumptions.
+An estimand defines the decision, the conditioning state, the counterfactual actions, and the target quantities of interest. A ModelBundle is one implementation of that estimand.
 
 ---
 
