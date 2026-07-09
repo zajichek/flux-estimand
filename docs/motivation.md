@@ -18,6 +18,10 @@ rather than
 
 This subtle shift changes both the development process and the philosophy of simulation modeling.
 
+> An estimand should be formulated so that the counterfactual worlds diverge only at the intervention of interest. Whenever possible, the observed history leading to the decision should be conditioned upon rather than re-simulated. This focuses the estimate on the causal effect of the decision itself and reduces unnecessary variability introduced by unrelated stochastic events.
+
+Condition on the information that would be available to the decision-maker at the moment the intervention is defined.
+
 ## Backstory
 
 While developing a hockey simulation in Flux, it became apparent that model complexity naturally grows without bound. Every omitted mechanism—players, line changes, fatigue, coaching decisions, puck possession—can be argued to improve realism. Without an explicit target, there is no principled stopping point.

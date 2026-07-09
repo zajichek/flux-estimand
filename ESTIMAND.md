@@ -10,13 +10,18 @@ If the estimand changes substantially, the project is likely addressing a differ
 
 An estimand should represent a single coherent decision problem. It may require estimating multiple related quantities or contrasts, provided they collectively inform the same decision. If a quantity serves a fundamentally different decision context, it should generally be defined in a separate estimand project.
 
+Whenever possible, an estimand should be defined at the decision point rather than at an arbitrary earlier time.
+
+This isolates the effect of the decision by conditioning on the observed history that led to the decision point. As a result, differences between counterfactual simulations are attributable to the decision itself rather than to unrelated stochastic events that occurred beforehand.
+
 # Item Template
 
 You should add an `ESTIMAND.md` file at the root of your `flux` project directory with the following sections:
 
 ## 1. Decision Context
 ## 2. Research Question
-## 3. Target Population / Initial Conditions
+## 3. Target Population
+### Conditioning State
 ## 4. Counterfactual Scenarios / Policies
 ## 5. Outcome
 ## 6. Contrast
