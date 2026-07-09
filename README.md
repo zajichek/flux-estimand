@@ -4,6 +4,8 @@
 
 A **ModelBundle** is the implementation of an **estimand**—a model built to answer a particular question—not the implementation of an entire domain.
 
+Flux Estimand provides a structured methodology for building simulation models whose explicit purpose is to estimate the causal consequences of alternative decisions under stated assumptions.
+
 ---
 
 ## Motivation
