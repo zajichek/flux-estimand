@@ -119,6 +119,12 @@ The `bundles/` directory contains one or more Flux `ModelBundle` implementations
 
 ---
 
+## Agent Guidance
+
+This repository includes optional guidance for AI/coding agents in [`AGENTS.md`](AGENTS.md) and task-specific skills in [`skills/`](skills/). These files help agents scaffold, review, and design Flux Estimand projects while preserving the methodology-first workflow.
+
+---
+
 ## Status
 
 Flux Estimand is experimental methodology for decision-oriented Flux modeling. Tooling may emerge later, but the current focus is a clear specification layer for building simulations around causal comparisons under stated assumptions.
