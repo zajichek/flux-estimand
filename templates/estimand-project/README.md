@@ -1,9 +1,37 @@
-# Goalie Pull Policy Estimand
+# <PROJECT TITLE>
 
-This template is a decision-oriented Flux Estimand project for comparing goalie-pull policies in a specified NHL playoff matchup.
+## Purpose
 
-The root `ESTIMAND.md` defines the decision context, conditioning state, counterfactual policies, target quantities, assumptions, validation targets, and model sufficiency criteria.
+<Briefly describe the decision-oriented question this project investigates.>
 
-Flux `ModelBundle` implementations live under `bundles/`. Each bundle is an executable realization of this estimand, not a general model of hockey.
+This should identify the decision being evaluated, why the decision matters, and what causal consequences the project is intended to estimate under stated assumptions.
 
-Start with `bundles/init/`, the minimal implementation capable of estimating the target quantities under explicit assumptions. Add later bundles only when they introduce a meaningful change in assumptions, fidelity, validation, or computational strategy while targeting the same estimand.
+## Estimand
+
+The estimand is defined in [`ESTIMAND.md`](ESTIMAND.md).
+
+<Briefly summarize the decision, conditioning state, counterfactual actions or policies, and primary target quantities.>
+
+The estimand is the authoritative decision specification for this project. Flux `ModelBundle` implementations should implement the estimand rather than redefine it.
+
+## Repository Structure
+
+```text
+.
+├── README.md
+├── ESTIMAND.md
+├── AGENTS.md
+├── docs/
+└── bundles/
+    └── init/
+```
+
+## ModelBundle Implementations
+
+The `bundles/` directory contains one or more Flux `ModelBundle` implementations of the estimand.
+
+The initial `init` bundle should represent the minimal working implementation capable of estimating the target quantities defined by the estimand.
+
+## Current Status
+
+<Describe the current development status.>

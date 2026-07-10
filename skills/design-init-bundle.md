@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Guide an agent from an `ESTIMAND.md` to a minimal `bundles/init/` design.
+Guide an agent from a downstream Flux Estimand project's root `ESTIMAND.md` to a minimal `bundles/init/` design.
 
 The `init` bundle is the first executable `ModelBundle` implementation of the estimand. It should estimate the target quantities with the least complexity needed under explicit assumptions.
 
@@ -10,6 +10,7 @@ The `init` bundle is the first executable `ModelBundle` implementation of the es
 
 - `ESTIMAND.md`
 - optional project `README.md`
+- optional template reference at `templates/estimand-project/bundles/init/`
 
 ## Required Output
 

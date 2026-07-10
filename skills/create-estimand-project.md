@@ -8,7 +8,7 @@ The aim is not to create a full simulator. The aim is to define the decision, th
 
 ## When to Use
 
-Use this when a user wants to start a new Flux Estimand project, convert a broad simulation idea into an estimand project, or create a template for later `ModelBundle` implementations.
+Use this when a user wants to start a new Flux Estimand project, convert a broad simulation idea into an estimand project, or instantiate the reusable template at `templates/estimand-project/`.
 
 ## Recommended Project Structure
 
@@ -16,8 +16,11 @@ Use this when a user wants to start a new Flux Estimand project, convert a broad
 estimand-project/
 ├── README.md
 ├── ESTIMAND.md
+├── AGENTS.md
 ├── docs/
+│   └── README.md
 └── bundles/
+    ├── README.md
     └── init/
         ├── README.md
         └── bundle.yml
@@ -61,7 +64,11 @@ estimand-project/
 
    Identify the empirical or decision-relevant quantities a bundle should reproduce or satisfy before its estimates are trusted.
 
-10. Scaffold `bundles/init/`.
+10. Copy or reproduce the template structure.
+
+    Use `templates/estimand-project/` as the starting point. Replace placeholders such as `<PROJECT TITLE>`, `<ESTIMAND_ID>`, `<DECISION BEING EVALUATED>`, `<CONDITIONING STATE>`, and `<PRIMARY OUTCOME>`.
+
+11. Scaffold `bundles/init/`.
 
     Create a minimal initial bundle directory with a `README.md` and `bundle.yml`. The `init` bundle should declare the `estimand_id` it implements and document its own assumptions separately from the estimand.
 

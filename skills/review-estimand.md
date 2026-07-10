@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Guide an agent reviewing an existing `ESTIMAND.md` for conceptual clarity and consistency with the Flux Estimand methodology.
+Guide an agent reviewing a downstream Flux Estimand project's root `ESTIMAND.md` for conceptual clarity and consistency with the Flux Estimand methodology.
 
-The review should test whether the document defines a decision-oriented causal comparison before judging implementation details.
+The review should test whether the document defines a decision-oriented causal comparison before judging implementation details. The framework repository provides a generic template at `templates/estimand-project/ESTIMAND.md`; completed estimands live in downstream projects.
 
 ## Checklist
 

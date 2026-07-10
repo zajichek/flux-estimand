@@ -64,4 +64,4 @@ empty_net_goal_allowed
 
 Those fields are not the estimand. They are part of an implementation contract that allows the estimand-level target quantities to be calculated consistently across bundles.
 
-Endpoint functions and formal output contracts are future tooling ideas; see `docs/future-directions.md`.
+Endpoint functions and formal output contracts are future tooling ideas; see `future-directions.md`.

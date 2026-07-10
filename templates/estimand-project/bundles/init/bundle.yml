@@ -1,0 +1,7 @@
+id: init
+estimand_id: <ESTIMAND_ID>
+title: Initial ModelBundle
+description: >
+  Minimal working ModelBundle implementation of the target estimand.
+version: 0.1.0
+status: draft

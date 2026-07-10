@@ -6,17 +6,15 @@ A `ModelBundle` is one implementation of an estimand: a model built to estimate 
 
 Flux Estimand provides a structured methodology for building decision-oriented Flux simulations under stated assumptions.
 
+This repository is the Flux Estimand framework repository. It contains methodology, conceptual documentation, reusable agent skills, and a project template. It is not itself an estimand project and does not contain its own root-level `ESTIMAND.md`.
+
 ---
 
 ## Motivation
 
 Simulation projects often begin with a broad goal:
 
-> "Simulate hockey."
-
-or
-
-> "Simulate heart failure."
+> "Simulate the system."
 
 That framing can make model scope unbounded. Every omitted mechanism, entity, and interaction can be argued to make the simulation more realistic.
 
@@ -27,6 +25,38 @@ Flux Estimand starts from a different question:
 The framework is intended for decision-oriented Flux projects where the goal is to estimate the causal consequences of alternative decisions, actions, or policies. It is not a requirement for every possible Flux simulation.
 
 Flux remains the simulation engine. Flux Estimand is a layer above Flux that structures the scientific and decision question before a `ModelBundle` implementation is built.
+
+---
+
+## Framework vs Project
+
+This repository provides the reusable framework:
+
+```text
+flux-estimand/
+├── README.md
+├── docs/
+├── skills/
+└── templates/
+```
+
+A downstream Flux Estimand project contains the completed decision specification and implementations:
+
+```text
+downstream-estimand-project/
+├── README.md
+├── ESTIMAND.md
+├── AGENTS.md
+├── docs/
+└── bundles/
+    └── init/
+```
+
+Every downstream Flux Estimand project contains a root-level `ESTIMAND.md` that serves as its authoritative decision specification. The framework repository describes that artifact and provides a reusable template, but does not contain its own estimand.
+
+The `AGENTS.md` provided under the project template is intended to be copied and customized within downstream estimand projects. It is not guidance for maintaining the Flux Estimand framework repository itself.
+
+Start a new project from [`templates/estimand-project/`](templates/estimand-project/). The generic estimand template lives at [`templates/estimand-project/ESTIMAND.md`](templates/estimand-project/ESTIMAND.md).
 
 ---
 
@@ -84,44 +114,26 @@ A decision-oriented Flux estimand should specify:
 
 ---
 
-## Repository Structure
-
-An estimand project is organized around a decision-oriented estimand, with one or more Flux `ModelBundle` implementations beneath it.
-
-```text
-estimand-project/
-├── README.md
-├── ESTIMAND.md
-├── docs/
-└── bundles/
-    ├── init/
-    └── alternative_bundle/
-```
-
-The root `ESTIMAND.md` defines the decision-oriented estimand: the decision context, conditioning state, counterfactual actions or policies, target quantities, assumptions, validation targets, and sufficiency criteria.
-
-The `bundles/` directory contains one or more Flux `ModelBundle` implementations of that estimand. The recommended first bundle is `bundles/init/`, the minimal working implementation capable of estimating the target quantities with explicit assumptions.
-
----
-
 ## Repository Contents
 
-| Document | Purpose |
-|----------|---------|
-| `ESTIMAND.md` | Template for a decision-oriented estimand specification |
-| `docs/motivation.md` | Why Flux Estimand starts from decisions rather than domains |
-| `docs/potential-outcomes.md` | How counterfactual reasoning motivates the framework |
-| `docs/model-bundle.md` | Interpreting ModelBundles as estimand implementations |
-| `docs/model-sufficiency.md` | Defining sufficiency relative to the target decision estimand |
-| `docs/workflow.md` | Practical workflow for decision-oriented Flux Estimand projects |
-| `docs/future-directions.md` | Exploratory ideas for tooling, endpoints, policy spaces, and execution |
-| `templates/` | Starting points for new estimand projects |
+| Path | Purpose |
+|------|---------|
+| [`docs/motivation.md`](docs/motivation.md) | Why Flux Estimand starts from decisions rather than domains |
+| [`docs/potential-outcomes.md`](docs/potential-outcomes.md) | How counterfactual reasoning motivates the framework |
+| [`docs/modelbundle.md`](docs/modelbundle.md) | Interpreting ModelBundles as estimand implementations |
+| [`docs/model-sufficiency.md`](docs/model-sufficiency.md) | Defining sufficiency relative to the target decision estimand |
+| [`docs/workflow.md`](docs/workflow.md) | Practical workflow for decision-oriented Flux Estimand projects |
+| [`docs/future-directions.md`](docs/future-directions.md) | Exploratory ideas for tooling, endpoints, policy spaces, and execution |
+| [`skills/`](skills/) | Reusable guidance for agents creating, reviewing, and designing Flux Estimand projects |
+| [`templates/estimand-project/`](templates/estimand-project/) | Copyable scaffold for a downstream Flux Estimand project |
 
 ---
 
 ## Agent Guidance
 
-This repository includes optional guidance for AI/coding agents in [`AGENTS.md`](AGENTS.md) and task-specific skills in [`skills/`](skills/). These files help agents scaffold, review, and design Flux Estimand projects while preserving the methodology-first workflow.
+Reusable task guidance lives in [`skills/`](skills/). These files are optional support for AI/coding agents and are not required to use Flux Estimand.
+
+Project-level agent guidance belongs inside downstream estimand projects. The template version is [`templates/estimand-project/AGENTS.md`](templates/estimand-project/AGENTS.md).
 
 ---
 
