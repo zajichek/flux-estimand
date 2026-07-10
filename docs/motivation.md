@@ -4,11 +4,11 @@ Simulation projects naturally encourage realism.
 
 If a project begins with "simulate hockey," "simulate heart failure," or "simulate an emergency department," there is no obvious stopping point. More mechanisms, entities, interactions, and edge cases can always be added.
 
-Flux Estimand narrows the starting point:
+[Flux Estimand](https://github.com/zajichek/flux-estimand) narrows the starting point:
 
 > What decision are we evaluating?
 
-The goal is not to simulate an entire domain. The goal is to construct a decision-oriented Flux `ModelBundle` capable of estimating the causal consequences of alternative actions or policies under stated assumptions.
+The goal is not to simulate an entire domain. The goal is to construct a decision-oriented [Flux](https://github.com/jarrod-dalton/flux) `ModelBundle` capable of estimating the causal consequences of alternative actions or policies under stated assumptions.
 
 ## Decisions Before Domains
 
@@ -16,7 +16,7 @@ A domain-first workflow asks:
 
 > What does the system contain?
 
-A Flux Estimand workflow asks:
+A [Flux Estimand](https://github.com/zajichek/flux-estimand) workflow asks:
 
 > What counterfactual worlds must be compared to inform this decision?
 
@@ -42,7 +42,7 @@ From that shared state, the simulation compares alternative goalie-pull policies
 
 ## Scope Control
 
-Flux Estimand does help control scope, but scope control is not the main goal. The main goal is to make the causal comparison explicit.
+[Flux Estimand](https://github.com/zajichek/flux-estimand) does help control scope, but scope control is not the main goal. The main goal is to make the causal comparison explicit.
 
 Every proposed increase in complexity should be evaluated against one question:
 

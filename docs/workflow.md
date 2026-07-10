@@ -1,6 +1,6 @@
 # Workflow
 
-Flux Estimand is intended for decision-oriented Flux projects where the purpose of simulation is to compare counterfactual actions or policies under stated assumptions.
+[Flux Estimand](https://github.com/zajichek/flux-estimand) is intended for decision-oriented [Flux](https://github.com/jarrod-dalton/flux) projects where the purpose of simulation is to compare counterfactual actions or policies under stated assumptions.
 
 ## Practical Steps
 
@@ -26,15 +26,15 @@ Flux Estimand is intended for decision-oriented Flux projects where the purpose 
 
 6. Determine required state and processes.
 
-   Identify the information and dynamics that must be represented for the comparison to be credible. The estimand specifies what must be recoverable, not the implementation details of how Flux stores it.
+   Identify the information and dynamics that must be represented for the comparison to be credible. The estimand specifies what must be recoverable, not the implementation details of how [Flux](https://github.com/jarrod-dalton/flux) stores it.
 
 7. Build the minimal `init` ModelBundle.
 
-   Start with `bundles/init/`, the simplest Flux `ModelBundle` implementation capable of estimating the target quantities under explicit assumptions.
+   Start with `bundles/init/`, the simplest [Flux](https://github.com/jarrod-dalton/flux) `ModelBundle` implementation capable of estimating the target quantities under explicit assumptions.
 
 8. Validate.
 
-   Validate the ModelBundle implementation against quantities relevant to the estimand. Validation should focus on what affects the decision comparison, not on general realism.
+   Validate the `ModelBundle` implementation against quantities relevant to the estimand. Validation should focus on what affects the decision comparison, not on general realism.
 
 9. Estimate.
 
@@ -56,4 +56,4 @@ estimand-project/
     └── alternative_bundle/
 ```
 
-The root `ESTIMAND.md` is the scientific and decision specification. Each directory under `bundles/` is a Flux `ModelBundle` implementation of that estimand.
+The root `ESTIMAND.md` is the scientific and decision specification. Each directory under `bundles/` is a [Flux](https://github.com/jarrod-dalton/flux) `ModelBundle` implementation of that estimand.

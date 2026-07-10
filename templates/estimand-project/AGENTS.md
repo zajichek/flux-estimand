@@ -22,7 +22,7 @@ The first implementation should normally be `bundles/init/`. Additional realism 
 
 This project follows the Flux Estimand framework:
 
-<FLUX_ESTIMAND_REPOSITORY_URL>
+https://github.com/zajichek/flux-estimand
 
 Relevant reusable skills include:
 

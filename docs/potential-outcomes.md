@@ -1,12 +1,12 @@
 # Potential Outcomes
 
-Flux Estimand is inspired by counterfactual reasoning in causal inference, including the potential outcomes framework.
+[Flux Estimand](https://github.com/zajichek/flux-estimand) is inspired by counterfactual reasoning in causal inference, including the [potential outcomes framework](https://en.wikipedia.org/wiki/Rubin_causal_model).
 
-Potential outcomes make the target comparison explicit: what would happen under one action versus another? In observed data, only one realized world is usually seen for a given unit or situation. The counterfactual worlds are unobserved and must be addressed through study design, assumptions, and estimation strategy.
+[Potential outcomes](https://en.wikipedia.org/wiki/Rubin_causal_model) make the target comparison explicit: what would happen under one action versus another? In observed data, only one realized world is usually seen for a given unit or situation. The counterfactual worlds are unobserved and must be addressed through study design, assumptions, and estimation strategy.
 
-Flux changes the mechanics of the comparison, but it does not remove the need for assumptions.
+[Flux](https://github.com/jarrod-dalton/flux) changes the mechanics of the comparison, but it does not remove the need for assumptions.
 
-A Flux `ModelBundle` can simulate alternative worlds under different actions or policies. Flux Estimand structures those simulations so the comparison is tied to a clear decision problem, conditioning state, target quantities, and validation requirements.
+A [Flux](https://github.com/jarrod-dalton/flux) `ModelBundle` can simulate alternative worlds under different actions or policies. [Flux Estimand](https://github.com/zajichek/flux-estimand) structures those simulations so the comparison is tied to a clear decision problem, conditioning state, target quantities, and validation requirements.
 
 ## Core Principle
 
@@ -18,7 +18,7 @@ History before the conditioning state is treated as observed and shared. From th
 
 Simulation can make counterfactual worlds executable under stated assumptions. It does not guarantee that those assumptions are correct, that the state representation is sufficient, or that the processes are valid.
 
-Flux Estimand therefore shifts attention from simply running simulations to specifying:
+[Flux Estimand](https://github.com/zajichek/flux-estimand) therefore shifts attention from simply running simulations to specifying:
 
 - what decision is being evaluated
 - where the counterfactual worlds diverge

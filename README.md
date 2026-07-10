@@ -4,9 +4,9 @@
 
 A `ModelBundle` is one implementation of an estimand: a model built to estimate the causal consequences of a particular decision, not the implementation of an entire domain.
 
-Flux Estimand provides a structured methodology for building decision-oriented Flux simulations under stated assumptions.
+[Flux Estimand](https://github.com/zajichek/flux-estimand) provides a structured methodology for building decision-oriented [Flux](https://github.com/jarrod-dalton/flux) simulations under stated assumptions.
 
-This repository is the Flux Estimand framework repository. It contains methodology, conceptual documentation, reusable agent skills, and a project template. It is not itself an estimand project and does not contain its own root-level `ESTIMAND.md`.
+This repository is the [Flux Estimand](https://github.com/zajichek/flux-estimand) framework repository. It contains methodology, conceptual documentation, reusable agent skills, and a project template. It is not itself an estimand project and does not contain its own root-level `ESTIMAND.md`.
 
 ---
 
@@ -18,13 +18,13 @@ Simulation projects often begin with a broad goal:
 
 That framing can make model scope unbounded. Every omitted mechanism, entity, and interaction can be argued to make the simulation more realistic.
 
-Flux Estimand starts from a different question:
+[Flux Estimand](https://github.com/zajichek/flux-estimand) starts from a different question:
 
 > What decision are we evaluating, and what counterfactual worlds need to be compared?
 
-The framework is intended for decision-oriented Flux projects where the goal is to estimate the causal consequences of alternative decisions, actions, or policies. It is not a requirement for every possible Flux simulation.
+The framework is intended for decision-oriented [Flux](https://github.com/jarrod-dalton/flux) projects where the goal is to estimate the causal consequences of alternative decisions, actions, or policies. It is not a requirement for every possible [Flux](https://github.com/jarrod-dalton/flux) simulation.
 
-Flux remains the simulation engine. Flux Estimand is a layer above Flux that structures the scientific and decision question before a `ModelBundle` implementation is built.
+[Flux](https://github.com/jarrod-dalton/flux) remains the simulation engine. [Flux Estimand](https://github.com/zajichek/flux-estimand) is a layer above [Flux](https://github.com/jarrod-dalton/flux) that structures the scientific and decision question before a `ModelBundle` implementation is built.
 
 ---
 
@@ -40,7 +40,7 @@ flux-estimand/
 └── templates/
 ```
 
-A downstream Flux Estimand project contains the completed decision specification and implementations:
+A downstream [Flux Estimand](https://github.com/zajichek/flux-estimand) project contains the completed decision specification and implementations:
 
 ```text
 downstream-estimand-project/
@@ -52,9 +52,9 @@ downstream-estimand-project/
     └── init/
 ```
 
-Every downstream Flux Estimand project contains a root-level `ESTIMAND.md` that serves as its authoritative decision specification. The framework repository describes that artifact and provides a reusable template, but does not contain its own estimand.
+Every downstream [Flux Estimand](https://github.com/zajichek/flux-estimand) project contains a root-level `ESTIMAND.md` that serves as its authoritative decision specification. The framework repository describes that artifact and provides a reusable template, but does not contain its own estimand.
 
-The `AGENTS.md` provided under the project template is intended to be copied and customized within downstream estimand projects. It is not guidance for maintaining the Flux Estimand framework repository itself.
+The `AGENTS.md` provided under the project template is intended to be copied and customized within downstream estimand projects. It is not guidance for maintaining the [Flux Estimand](https://github.com/zajichek/flux-estimand) framework repository itself.
 
 Start a new project from [`templates/estimand-project/`](templates/estimand-project/). The generic estimand template lives at [`templates/estimand-project/ESTIMAND.md`](templates/estimand-project/ESTIMAND.md).
 
@@ -88,13 +88,13 @@ An estimand defines the decision problem, the counterfactual actions or policies
 
 The conditioning state defines the point at which counterfactual worlds diverge. History before that state is treated as observed and shared; the alternative worlds differ only in the decision, action, or policy being evaluated.
 
-A Flux `ModelBundle` is one executable implementation of the estimand. Multiple `ModelBundle` implementations may target the same estimand while differing in assumptions, fidelity, parameterization, or computational strategy.
+A [Flux](https://github.com/jarrod-dalton/flux) `ModelBundle` is one executable implementation of the estimand. Multiple `ModelBundle` implementations may target the same estimand while differing in assumptions, fidelity, parameterization, or computational strategy.
 
 ---
 
 ## What an Estimand Defines
 
-A decision-oriented Flux estimand should specify:
+A decision-oriented [Flux Estimand](https://github.com/zajichek/flux-estimand) should specify:
 
 - decision context
 - research question
@@ -118,20 +118,20 @@ A decision-oriented Flux estimand should specify:
 
 | Path | Purpose |
 |------|---------|
-| [`docs/motivation.md`](docs/motivation.md) | Why Flux Estimand starts from decisions rather than domains |
+| [`docs/motivation.md`](docs/motivation.md) | Why [Flux Estimand](https://github.com/zajichek/flux-estimand) starts from decisions rather than domains |
 | [`docs/potential-outcomes.md`](docs/potential-outcomes.md) | How counterfactual reasoning motivates the framework |
-| [`docs/modelbundle.md`](docs/modelbundle.md) | Interpreting ModelBundles as estimand implementations |
+| [`docs/modelbundle.md`](docs/modelbundle.md) | Interpreting `ModelBundles` as estimand implementations |
 | [`docs/model-sufficiency.md`](docs/model-sufficiency.md) | Defining sufficiency relative to the target decision estimand |
-| [`docs/workflow.md`](docs/workflow.md) | Practical workflow for decision-oriented Flux Estimand projects |
+| [`docs/workflow.md`](docs/workflow.md) | Practical workflow for decision-oriented [Flux Estimand](https://github.com/zajichek/flux-estimand) projects |
 | [`docs/future-directions.md`](docs/future-directions.md) | Exploratory ideas for tooling, endpoints, policy spaces, and execution |
-| [`skills/`](skills/) | Reusable guidance for agents creating, reviewing, and designing Flux Estimand projects |
-| [`templates/estimand-project/`](templates/estimand-project/) | Copyable scaffold for a downstream Flux Estimand project |
+| [`skills/`](skills/) | Reusable guidance for agents creating, reviewing, and designing [Flux Estimand](https://github.com/zajichek/flux-estimand) projects |
+| [`templates/estimand-project/`](templates/estimand-project/) | Copyable scaffold for a downstream [Flux Estimand](https://github.com/zajichek/flux-estimand) project |
 
 ---
 
 ## Agent Guidance
 
-Reusable task guidance lives in [`skills/`](skills/). These files are optional support for AI/coding agents and are not required to use Flux Estimand.
+Reusable task guidance lives in [`skills/`](skills/). These files are optional support for AI/coding agents and are not required to use [Flux Estimand](https://github.com/zajichek/flux-estimand).
 
 Project-level agent guidance belongs inside downstream estimand projects. The template version is [`templates/estimand-project/AGENTS.md`](templates/estimand-project/AGENTS.md).
 
@@ -139,6 +139,6 @@ Project-level agent guidance belongs inside downstream estimand projects. The te
 
 ## Status
 
-Flux Estimand is experimental methodology for decision-oriented Flux modeling. Tooling may emerge later, but the current focus is a clear specification layer for building simulations around causal comparisons under stated assumptions.
+[Flux Estimand](https://github.com/zajichek/flux-estimand) is experimental methodology for decision-oriented [Flux](https://github.com/jarrod-dalton/flux) modeling. Tooling may emerge later, but the current focus is a clear specification layer for building simulations around causal comparisons under stated assumptions.
 
-**Build the simplest ModelBundle implementation capable of estimating the consequences of the decision.**
+**Build the simplest `ModelBundle` implementation capable of estimating the consequences of the decision.**

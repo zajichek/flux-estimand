@@ -30,6 +30,47 @@ Some estimands may define a policy space rather than a small list of fixed actio
 
 For example, a goalie-pull estimand might compare fixed pull times, threshold-based policies, and adaptive policies depending on score, time, and possession. Different bundles may explore that policy space differently while still targeting the same decision problem.
 
+## Decision Estimands and Policy Estimands
+
+Flux Estimands may eventually distinguish more explicitly between different levels of intervention.
+
+A decision estimand evaluates the causal consequences of a specific action taken at a defined conditioning state. The counterfactual worlds share the same history up to that state and diverge only at the immediate decision.
+
+```text
+5:00 remaining
+Team trailing by one
+Goalie currently in net
+
+Decision:
+Pull goalie now
+versus
+Do not pull goalie now
+```
+
+This asks: what is the causal consequence of the action taken at this decision point?
+
+A policy estimand evaluates the causal consequences of adopting a decision policy at an earlier point in time. The policy may govern one or more future decisions as the system evolves. A policy is itself a type of decision: the decision to adopt a rule governing future actions.
+
+```text
+10:00 remaining
+Team trailing
+
+Adopt policy:
+Pull at 5:00 if still trailing
+versus
+Follow an alternative goalie-pull policy
+```
+
+This asks: what is the causal consequence of adopting this policy from the current state onward?
+
+These are not the same intervention. Deciding at exactly 5:00 whether to pull the goalie now is localized to an immediate action from a conditioning state. Deciding at 10:00 to follow a policy that may pull the goalie at 5:00 compares complete future decision rules from an earlier state and includes all downstream consequences of adopting those policies.
+
+Both are valid uses of the Flux Estimand framework, but they may require different simulation designs. The distinction depends on where the counterfactual worlds begin to diverge.
+
+This classification is exploratory and should not yet alter the required `ESTIMAND.md` template. The framework should avoid accumulating classifications prematurely until repeated applications show that the distinction is consistently useful.
+
+Principle: the intervention should be defined at the level of the real decision being evaluated. If the decision is whether to act now, the conditioning state should occur immediately before that action. If the decision is whether to adopt a rule governing future actions, the intervention is the policy itself.
+
 ## Conditioning States as Interfaces
 
 Conditioning states may eventually serve as interfaces between estimands.
